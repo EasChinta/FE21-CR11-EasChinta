@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.img-thumbnail {
+  width: 70px !important;
+  height: 70px !important;
+}
+
+tr {
+  text-align: center;
+}
+.userImage {
+  width: 100px;
+  height: auto;
+}
