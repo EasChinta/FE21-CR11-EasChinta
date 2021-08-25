@@ -3,7 +3,6 @@
 session_start();
 
 include_once 'actions/db_connect.php';
-include_once 'components/functions.php';
 include_once 'components/boot.php';
 
 if (!isset($_SESSION['adm']) && !isset($_SESSION['user'])) {
@@ -14,26 +13,29 @@ if (!isset($_SESSION['adm']) && !isset($_SESSION['user'])) {
 if (isset($_SESSION['user'])) {
     $id = $_SESSION['user'];
     $query = "SELECT animals.animal_id, animals.picture, name, date_collected, first_name, last_name, animals.status FROM pet_adoption LEFT JOIN `user` ON pet_adoption.user_id = user.user_id LEFT JOIN animals ON pet_adoption.animal_id = animals.animal_id WHERE pet_adoption.user_id = {$id} AND animals.status = 'adopted'";
+    $result = mysqli_query($connect, $query);
 }
 
 if (isset($_SESSION['adm'])) {
     $query = "SELECT animals.animal_id, animals.picture, name, date_collected, first_name, last_name, animals.status FROM pet_adoption LEFT JOIN `user` ON pet_adoption.user_id = user.user_id LEFT JOIN animals ON pet_adoption.animal_id = animals.animal_id WHERE animals.status = 'adopted'";
+    $result = mysqli_query($connect, $query);
 }
 
-$tbody = '';
-$result = mysqli_query($connect, $query);
-if ($result) {
-    if (mysqli_num_rows($result)  > 0) {
-        for ($set = array(); $rows = mysqli_fetch_assoc($result); $set[] = $rows);
-        foreach ($set as $value) {
-            $tbody .= showRows($value['picture'], $value['name'], $value['date_collected'], $value['first_name'] . " " . $value['last_name'], $value['status'], $value['animal_id']);
-        }
-    } else {
-        echo "<tr><td colspan='4'><center>No Data Available </center></td></tr>";
+$tbody = ''; 
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+        $tbody .= "<tr>
+        <td><img class='img-thumbnail' style='height: 150px;' src='" 
+        . $row['picture'] . "'</td>
+        <td>" . $row['name'] . "</td>
+        <td>" . $row['date_collected'] . "</td>
+        <td>" . $row['first_name'] . "</td>
+        <td>" . $row['status'] . "</td>
+    </tr>";;
     }
-    $connect->close();
 } else {
-    header("location: error.php");
+    $tbody = "<tr><td colspan='5'><center>No Data Available </center></td></tr>";
+    $connect->close();
 }
 ?>
 
@@ -65,9 +67,6 @@ if ($result) {
                         <th>Date collected</th>
                         <th>By user</th>
                         <th>Status</th>
-                        <?php if (isset($_SESSION['adm'])) {
-                            echo "<th>Action</th>";
-                        }; ?>
                     </tr>
                 </thead>
                 <tbody>

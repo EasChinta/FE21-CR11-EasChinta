@@ -2,7 +2,6 @@
 session_start();
 
 require_once 'actions/db_connect.php';
-require_once 'components/functions.php';
 include_once 'components/boot.php';
 
 if (!isset($_SESSION['adm']) && !isset($_SESSION['user'])) {
@@ -37,7 +36,23 @@ if (!isset($_SESSION['adm']) && !isset($_SESSION['user'])) {
             for ($set = array(); $row = mysqli_fetch_assoc($result); $set[] = $row);
             if (mysqli_num_rows($result)) {
                 foreach ($set as $value) {
-                    echo showPet($value['picture'], $value['name'], $value['description'], $value['age'], $value['address'], $value['city'], $value['zip'], $value['animal_id']);
+                    echo '<div class="col-6 col-md-4 col-lg-3 my-3">
+                    <div class="card">
+                        <div style="background-image: url(' . $value['picture'] . '); background-repeat: no-repeat; background-size: contain; height: 350px; background-position: center;">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Name: ' . $value['name'] . '</h5>
+                            <p class="card-text">Description: ' . $value['description'] . '</p>
+                            <p class="card-text">Age: ' . $value['age'] . '</p>
+                            <p class="card-text">Location:<br>' . $value['address'] . '<br>' . $value['city'] . '<br>ZIP: ' . $value['zip'] . '</p>
+                        </div>
+                        <div class="card-body">
+                            <a href="adopt.php?id=' . $value['animal_id'] . '" class="btn btn-outline-dark btn-sm">Take me home</a>
+                            <a href="details.php?id=' . $value['animal_id'] . '" class="btn btn-outline-success mt-2 btn-sm">Read More</a>
+                        </div>
+                    </div>
+                    </div>
+                ';
                 }
             } else {
                 echo "<div>No data to display</div>";

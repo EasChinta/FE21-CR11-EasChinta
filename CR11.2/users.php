@@ -3,7 +3,6 @@ session_start();
 require_once 'actions/db_connect.php';
 require_once 'components/navigation.php';
 require_once 'components/boot.php';
-require_once 'components/functions.php';
 
 
 if (!isset($_SESSION['adm']) && !isset($_SESSION['user'])) {

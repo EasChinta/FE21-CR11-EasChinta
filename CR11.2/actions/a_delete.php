@@ -3,7 +3,7 @@
 session_start();
 
 require_once 'db_connect.php';
-include_once '../components/functions.php';
+
 include_once '../components/boot.php';
 
 

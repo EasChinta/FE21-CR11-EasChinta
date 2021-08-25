@@ -1,9 +1,8 @@
 <?php
-
 session_start();
 
 include_once 'db_connect.php';
-include_once '../components/functions.php';
+
 include_once '../components/boot.php';
 
 
@@ -27,19 +26,19 @@ if ($_POST) {
     $age = $_POST['age'];
     $status = $_POST['status'];
     $type = $_POST['type'];
-    $id = $_POST['id'];
+    $id = settype($_POST['id'], "integer");
 
-    $locations = mysqli_query($connect, "SELECT * FROM location WHERE location_id = $location_id");
+    $locations = mysqli_query($connect, "SELECT * FROM location WHERE location_id = $id");
     $row = $locations->fetch_array(MYSQLI_ASSOC);
 
-    $query = "UPDATE `animals` SET `location_id` = '$location_id', `name` = '$name', `description` = '$description', `hobbies` = '$hobbies', `age` = '$age', `picture` = '$picture', `status` = '$status', `type` = '$type' WHERE `animals`.`animal_id` = $id";
+    $query = "INSERT INTO `animals` (`location_id`, `name`, `description`, `hobbies`, `age`, `picture`, `status`, `type`) VALUES ('$location_id', '$name', '$description', '$hobbies', '$age', '$picture', '$status', '$type')";
 
     if (mysqli_query($connect, $query) == true) {
         $class = "dark";
-        $message = "The entry below was successfully updated:<br><br>" . showPet($picture, $name, $description, $age, $row['address'], $row['city'], $row['zip'], ' '); // Preview of updated item
+        $message = "The entry below was successfully created:<br><br>";
     } else {
         $class = "danger";
-        $message = "Error while updating record. Try again: <br>" . $connect->error;
+        $message = "Error while creating record. Try again: <br>" . $connect->error;
     }
     $connect->close();
 } else {
@@ -54,17 +53,20 @@ if ($_POST) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Update</title>
+    <title>Create</title>
 </head>
 
 <body>
     <div class="container">
-        <div class="row py-5">
-
+        <div class="row justify-content-evenly py-5">
+            <div class="mt-3 mb-3">
+                <h1>Create Request</h1>
+            </div>
             <div class="alert alert-<?= $class; ?> d-flex flex-column align-items-center" role="alert">
-                <?php echo ($message) ?? ''; ?></div>
-            <a href='../home.php' class="btn btn-outline-dark">Back</a>
+                <?php echo ($message) ?? ''; ?>
+                <a href='../home.php' class="btn btn-primary my-2">Home</a>
+                <a href='../create.php' class="btn btn-primary my-2">Add another Pet</a>
+            </div>
         </div>
     </div>
 

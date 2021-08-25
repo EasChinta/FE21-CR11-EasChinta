@@ -3,7 +3,7 @@ ob_start();
 session_start();
 
 require_once 'actions/db_connect.php';
-require_once 'components/functions.php';
+
 include_once 'components/boot.php';
 
 
@@ -18,8 +18,14 @@ $email = $password = $emailError = $passError = '';
 if (isset($_POST['btn-login'])) {
 
 
-  $email = sanitize($_POST['email']);
-  $pass = sanitize($_POST['pass']);
+  $email = trim($_POST['email']);
+  $email = strip_tags($email);
+  $email = htmlspecialchars($email);
+  
+
+  $pass = trim($_POST['pass']);
+  $pass = strip_tags($pass);
+  $pass = htmlspecialchars($pass);
 
 
 

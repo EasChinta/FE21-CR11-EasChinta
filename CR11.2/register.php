@@ -10,7 +10,7 @@ require_once 'actions/db_connect.php';
 require_once 'actions/file_upload.php';
 require_once 'components/boot.php';
 $error = false;
-$fname = $lname = $email = $pass = $picture = '';
+$fname = $lname = $email = $pass = $phone_number = $address = $picture = '';
 
 $fnameError = $lnameError = $emailError = $dateError = $passError = $picError = '';
 if (isset($_POST['btn-signup'])) {
