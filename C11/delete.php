@@ -3,6 +3,7 @@
 session_start();
 
 include_once 'actions/db_connect.php';
+include_once 'components/functions.php';
 include_once 'actions/a_select.php';
 include_once 'components/boot.php';
 include_once 'components/navigation.php';
@@ -34,23 +35,7 @@ if (isset($_SESSION['user'])) {
         <div class="row justify-content-evenly py-5">
             <div class="mt-3 mb-3">
                 <h1>Element to be deleted</h1>
-                <?php echo '<div class="col-6 col-md-4 col-lg-3 my-3">
-                    <div class="card">
-                        <div style="background-image: url(' . $data['picture'] . '); background-repeat: no-repeat; background-size: contain; height: 350px; background-position: center;">
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Name: ' . $data['name'] . '</h5>
-                            <p class="card-text">Description: ' . $data['description'] . '</p>
-                            <p class="card-text">Age: ' . $data['age'] . '</p>
-                            <p class="card-text">Location:<br>' . $data['address'] . '<br>' . $data['city'] . '<br>ZIP: ' . $data['zip'] . '</p>
-                        </div>
-                        <div class="card-body">
-                            <a href="adopt.php?id=' . $data['animal_id'] . '" class="btn btn-outline-dark btn-sm">Take me home</a>
-                            <a href="details.php?id=' . $data['animal_id'] . '" class="btn btn-outline-success mt-2 btn-sm">Read More</a>
-                        </div>
-                    </div>
-                    </div>
-                '; ?>
+                <?php echo showPet($data['picture'], $data['name'], $data['description'], $data['age'], $data['address'], $data['city'], $data['zip'], $data['animal_id']); ?>
                 <h3 class="mb-4">Do you really want to delete this pet?</h3>
                 <form action="actions/a_delete.php" method="post">
                     <input type="hidden" name="id" value="<?php echo $id ?>" />

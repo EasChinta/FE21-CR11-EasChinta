@@ -4,6 +4,7 @@ session_start();
 
 include_once 'db_connect.php';
 include_once 'a_select.php';
+include_once '../components/functions.php';
 include_once '../components/boot.php';
 
 if (!isset($_SESSION['adm']) && !isset($_SESSION['user'])) {
@@ -26,8 +27,7 @@ if (mysqli_query($connect, $query) === true) {
     if (mysqli_query($connect, $query2) === true) {
         $class = "dark";
         $tags = '<img src="https://bestanimations.com/media/fireworks/1962490925amazing-electrc-feel-fireworks-gif.gif" style="width:2000px;">';
-        $message = "Congratulations!<br> You adopted: " . $name . " <br>";
-        
+        $message = "Congratulations!<br> You adopted: " . $name . " <br>" . showPet($picture, $name, $description, $age, $row['address'], $row['city'], $row['zip'], '#');
     } else {
         $class = "danger";
         $tags = '';

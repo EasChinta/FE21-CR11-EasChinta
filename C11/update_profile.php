@@ -4,6 +4,7 @@ session_start();
 
 require_once 'actions/db_connect.php';
 require_once 'actions/file_upload.php';
+require_once 'components/functions.php';
 include_once 'components/boot.php';
 
 if (!isset($_SESSION['adm']) && !isset($_SESSION['user'])) {
@@ -34,29 +35,12 @@ if (isset($_GET['id'])) {
 }
 
 if (isset($_POST["submit"])) {
-
-
-    $f_name = trim($_POST['first_name']);
-    $f_name = strip_tags($f_name);
-    $f_name = htmlspecialchars($f_name);
-
-
-    $l_name = trim($_POST['last_name']);
-    $l_name = strip_tags($l_name);
-    $l_name = htmlspecialchars($l_name);
-
-    $email = trim($_POST['email']);
-    $email = strip_tags($email);
-    $email = htmlspecialchars($email);
-
-    $phone_number = trim($_POST['phone_number']);
-    $phone_number = strip_tags($phone_number);
-    $phone_number = htmlspecialchars($phone_number);
-
-    $address = trim($_POST['address']);
-    $address = strip_tags($address);
-    $address = htmlspecialchars($address);
-
+    $f_name = sanitize($_POST['first_name']);
+    $l_name = sanitize($_POST['last_name']);
+    $email = sanitize($_POST['email']);
+    $phone_number = sanitize($_POST['phone_number']);
+    $address = sanitize($_POST['address']);
+    $id = sanitize($_POST['id']);
 
 
 
