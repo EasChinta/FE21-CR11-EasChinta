@@ -1,8 +1,8 @@
 <?php
-$hostname = "127.0.0.1"; 
-$username = "root"; 
-$password = ""; 
-$dbname = "fswd13_CR11_PetAdoption_EasChinta" ; 
+$hostname = "173.212.235.205"; 
+$username = "eascodef_eas"; 
+$password = "Mr.Robot19!"; 
+$dbname = "eascodef_pet_adoption" ; 
             
 $connect = new mysqli($hostname, $username, $password, $dbname);
             
